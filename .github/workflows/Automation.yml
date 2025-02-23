@@ -46,12 +46,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
   
-    steps:
-    - name: Debug SSH Connection
-      run: |
-          sudo apt-get update && sudo apt-get install -y sshpass
-          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'SSH connection successful'"
-      
+    steps:      
     - name: SSH into Server & Deploy
       uses: appleboy/ssh-action@master
       with:
