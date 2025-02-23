@@ -54,7 +54,8 @@ jobs:
          username: ${{ secrets.SERVER_USER }}
          key: ${{ secrets.SSH_PRIVATE_KEY }}
          script: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/caesar-app:latest
-          docker stop caesar-app || true
-          docker rm caesar-app || true
-          docker run -it --name caesar-app ${{ secrets.DOCKER_USERNAME }}/caesar-app:latest
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/caesar-app:latest
+            docker stop caesar-app || true
+            docker rm caesar-app || true
+            docker run -d --name caesar-app -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/caesar-app:latest
