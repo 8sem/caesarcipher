@@ -45,16 +45,21 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-
+  
     steps:
-      - name: SSH into Server & Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          script: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/caesar-app:latest
-            docker stop caesar-app || true
-            docker rm caesar-app || true
-            docker run -it --name caesar-app ${{ secrets.DOCKER_USERNAME }}/caesar-app:latest
+    - name: Debug SSH Connection
+      run: |
+          sudo apt-get update && sudo apt-get install -y sshpass
+          sshpass -p "${{ secrets.SERVER_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "echo 'SSH connection successful'"
+      
+    - name: SSH into Server & Deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        password: ${{ secrets.SERVER_PASSWORD }}
+        script: |
+          docker pull ${{ secrets.DOCKER_USERNAME }}/caesar-app:latest
+          docker stop caesar-app || true
+          docker rm caesar-app || true
+          docker run -it --name caesar-app ${{ secrets.DOCKER_USERNAME }}/caesar-app:latest
