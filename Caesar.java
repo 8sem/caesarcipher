@@ -25,6 +25,4 @@ class Caesar {
         System.out.println("Shift : " + s);
         System.out.println("Cipher: " + encrypt(text, s));
     }
-} make this for user input 
-
-Please write in English language.
+} 
