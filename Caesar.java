@@ -1,28 +1,39 @@
+import java.util.Scanner;
+
 class Caesar {
     // Encrypts text using a shift of s
     public static StringBuffer encrypt(String text, int s) {
         StringBuffer result = new StringBuffer();
 
         for (int i = 0; i < text.length(); i++) {
-            if (Character.isUpperCase(text.charAt(i))) {
-                char ch = (char) (((int) text.charAt(i) +
-                        s - 65) % 26 + 65);
-                result.append(ch);
-            } else {
-                char ch = (char) (((int) text.charAt(i) +
-                        s - 97) % 26 + 97);
-                result.append(ch);
+            char ch = text.charAt(i);
+            if (Character.isUpperCase(ch)) {
+                ch = (char) (((ch - 'A' + s) % 26) + 'A');
+            } else if (Character.isLowerCase(ch)) {
+                ch = (char) (((ch - 'a' + s) % 26) + 'a');
             }
+            result.append(ch);
         }
         return result;
     }
 
-    // Driver code
+    // Main method
     public static void main(String[] args) {
-        String text = "RVCE is The BEST";
-        int s = 4;
-        System.out.println("Text  : " + text);
+        Scanner scanner = new Scanner(System.in);
+
+        // Taking user input for text
+        System.out.print("Enter text to encrypt: ");
+        String text = scanner.nextLine();
+
+        // Taking user input for shift value
+        System.out.print("Enter shift value: ");
+        int s = scanner.nextInt();
+
+        // Encrypt and display the result
+        System.out.println("\nText  : " + text);
         System.out.println("Shift : " + s);
         System.out.println("Cipher: " + encrypt(text, s));
+
+        scanner.close();
     }
-} 
+}
