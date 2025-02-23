@@ -52,4 +52,4 @@ jobs:
             docker pull yourdockerhubusername/caesar-app:latest
             docker stop caesar-app || true
             docker rm caesar-app || true
-            docker run -d --name caesar-app -p 8080:8080 yourdockerhubusername/caesar-app:latest
+            docker run -d --name caesar-app -p 8080:8080 8sem/caesar-app:latest
